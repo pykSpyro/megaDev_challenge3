@@ -2,3 +2,4 @@ node_modules/
 .build/
 challenge-page.html
 challenge-page_files/
+challenge-log/

@@ -36,7 +36,7 @@ not hydrated by this small snapshot build.
 ## Verification
 
 Built all five KB routes and inspected the new review in a browser. The actual Svelte
-components render 379 parser reports, 33 hint reports, and desk reference `DR-2HKX-E09X`.
+components render 379 parser reports, 33 hint reports, and desk reference `DR-CZ86-ECDX`.
 The analysis writes the report IDs for each group to `analysis/report-groups.json`.
 
 The dependency audit reports two low-severity development-dependency notices via
