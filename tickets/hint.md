@@ -1,3 +1,10 @@
+## Resolution: won't fix
+
+The live course engineering update reports #4471 closed on 5 October 2026, with
+`hint` marked WON'T FIX because the booking-v3 form was retired. Close this ticket as
+not planned. The hint was not repaired; its affected form was retired.
+Source: https://hq.mega.dev/challenges/what-it-shows#engineering-update.
+
 ## Problem
 
 Booking-v3 displays `MM/DD/YYYY` to day-first tenants, but the form reads input using

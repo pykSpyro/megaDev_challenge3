@@ -18,8 +18,23 @@ signature: 'Codex, harness for pykSpyro, S01E03, 2026-11-16'
 The [original incident page](/kb/incidents/4471) says “one issue, one fix queued”.
 The component logic and tenant directory show two causes. Keep separate engineering
 tickets for the shared parser and the booking form hint; fixing either leaves the other.
-This review covers the export dated 4 October 2026. It does not establish the current
-production state or prove that a queued fix has shipped.
+The report counts below cover the export dated 4 October 2026. The engineering update
+on the live Challenge page supplies the later resolutions; the exported report data
+alone does not establish those outcomes.
+
+## Engineering update: 5 October 2026
+
+The [course's live engineering update](https://hq.mega.dev/challenges/what-it-shows#engineering-update)
+reports that #4471 closed on 5 October:
+
+- **Parser — fixed:** `fix(dates): parse dd/mm for eu locales`. The parser ticket is
+  closed as completed, based on that engineering report.
+- **Hint — won't fix:** booking-v3 form retired. The hint ticket is closed as not planned.
+  Retirement removes the affected form; it does not mean the hint itself was repaired.
+
+These are separate outcomes for separate causes. The historical counts remain unchanged.
+The course reports the resolution; this review does not claim an independent production
+retest or a commit hash that the update did not provide.
 
 <IncidentReview />
 
@@ -57,8 +72,9 @@ non-form paths remain correctly handled. Preserve the user's intended date in th
 
 Reports began in April; a large merge batch happened in July; reports continued into
 October. A July merge timestamp records desk activity, not the start of the fault.
-“Known” and “queued” therefore do not mean resolved. Track first receipt, merge time,
-fix deployment and verified recovery separately.
+The later engineering update closes the incident on 5 October. “Known” and “queued”
+in the original export did not establish that outcome. Track first receipt, merge time,
+engineering disposition and verified recovery separately.
 
 ## How the desk should triage the next report
 
@@ -76,7 +92,8 @@ export pages by report ID before counting.
 Keep accepted decision 0001 intact as history. Propose a new decision that supersedes it
 with this cause-based rule, and update the live triage procedure when that decision is accepted.
 Recheck the live desk before relying on this exported review: new reports and fixes may
-have arrived since export. Reproduce each failure, assign owners to both tickets, and close
-them independently only after the respective fix is verified.
+have arrived since export. For future incidents, reproduce each failure, assign owners,
+and record each ticket's actual disposition. Distinguish a verified fix from retirement,
+a won't-fix decision, or missing evidence.
 
 <RenderStamp {signature} />

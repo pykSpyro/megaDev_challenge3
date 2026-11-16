@@ -1,3 +1,10 @@
+## Resolution: fixed
+
+The live course engineering update reports #4471 closed on 5 October 2026, with
+`parser` fixed by `fix(dates): parse dd/mm for eu locales`. Close this ticket as completed.
+Source: https://hq.mega.dev/challenges/what-it-shows#engineering-update.
+This records the course's engineering report, not an independent production retest.
+
 ## Problem
 
 The shared parser reads dates month first for tenants whose locale uses day first.

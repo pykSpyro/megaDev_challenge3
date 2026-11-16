@@ -12,6 +12,10 @@ The original exported pages, logic, and accepted decision remain intact. The new
 explains where their prose conflicts with the computed views, separates two causes,
 and flags reports needing more evidence.
 
+The course's later engineering update reports #4471 closed on 5 October: parser fixed;
+hint won't fix because booking-v3 was retired. The two issues record those distinct
+dispositions as completed and not planned, respectively.
+
 ## Build and inspect
 
 Requires Node.js 22.12 or newer.
