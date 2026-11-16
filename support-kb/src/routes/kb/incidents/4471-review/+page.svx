@@ -1,0 +1,82 @@
+---
+layout: runbook
+title: '#4471 reviewed: two causes behind the date reports'
+owner: Codex (harness for pykSpyro)
+status: reviewed
+reviewed: 2026-11-16
+signature: 'Codex, harness for pykSpyro, S01E03, 2026-11-16'
+---
+
+<script>
+  import IncidentReview from '#lib/kb/IncidentReview.svelte';
+  import QueueTimeline from '#lib/kb/QueueTimeline.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+## Finding
+
+The [original incident page](/kb/incidents/4471) says “one issue, one fix queued”.
+The component logic and tenant directory show two causes. Keep separate engineering
+tickets for the shared parser and the booking form hint; fixing either leaves the other.
+This review covers the export dated 4 October 2026. It does not establish the current
+production state or prove that a queued fix has shipped.
+
+<IncidentReview />
+
+## Shared parser
+
+[Engineering ticket](https://github.com/pykSpyro/megaDev_challenge3/issues/1)
+
+The shared parser reads dates month first even when the tenant uses day-first dates.
+For example, report R-41200 from Harbour Dental describes 7 April becoming 4 July.
+Use the tenant's locale, not the reporter's browser locale, to establish the expected order.
+R-41205 belongs here even though intake tagged it `hint`: Morrow Tax uses `fr-FR`
+and booking-v2, and the report came through the app.
+
+Engineering should make parsing match the tenant's date convention, reject invalid dates,
+and test ambiguous dates through both app and email paths. Verify the final invite as well
+as the parsed value. The export identifies the behavior, not the parser implementation.
+
+## Booking-v3 hint
+
+[Engineering ticket](https://github.com/pykSpyro/megaDev_challenge3/issues/2)
+
+Booking-v3 prints `MM/DD/YYYY` for day-first tenants, while the form reads input in the
+tenant's order. People who follow the hint can receive the wrong date. This is a separate
+UI and input-contract defect. Report R-41230 is one example: Copper Studio uses `es-ES`
+and booking-v3, the report came through the form, and intake incorrectly tagged it `parser`.
+
+Engineering should derive the hint and parsing from the same tenant date convention.
+Test Alder Physio (`de-DE`), Copper Studio (`es-ES`), and Pale Harbour (`pt-PT`), with
+browser locales that differ from the tenant. Check that day-first booking-v2 forms and
+non-form paths remain correctly handled. Preserve the user's intended date in the invite.
+
+## What the timeline shows
+
+<QueueTimeline ticket={4471} />
+
+Reports began in April; a large merge batch happened in July; reports continued into
+October. A July merge timestamp records desk activity, not the start of the fault.
+“Known” and “queued” therefore do not mean resolved. Track first receipt, merge time,
+fix deployment and verified recovery separately.
+
+## How the desk should triage the next report
+
+The [current triage page](/kb/triage/dedupe) and its
+[accepted decision 0001](/kb/decisions/0001-dedupe-by-subject) treat matching normalized
+subjects as duplicates. The executable examples disagree: identical subjects can have
+different causes, and different subjects can share a cause.
+
+Use subject matches to find candidates, then read the report and check tenant locale,
+form version, channel, actual input and observed output. Merge only when the cause matches.
+Unknown tenants stay unplaced until investigated; missing evidence is not a reason to merge.
+Browser locale and intake tags are clues, not the grouping rule. Deduplicate overlapping
+export pages by report ID before counting.
+
+Keep accepted decision 0001 intact as history. Propose a new decision that supersedes it
+with this cause-based rule, and update the live triage procedure when that decision is accepted.
+Recheck the live desk before relying on this exported review: new reports and fixes may
+have arrived since export. Reproduce each failure, assign owners to both tickets, and close
+them independently only after the respective fix is verified.
+
+<RenderStamp {signature} />
